@@ -2,7 +2,7 @@ use crate::{ChangeTick, World};
 use super::systemmeta::SystemMeta;
 pub mod impls;
 
-pub unsafe trait SystemParam: Sized {
+pub trait SystemParam: Sized {
     /// Used to store data which persists across invocations of a system.
     type State: Send + Sync + 'static;
 
@@ -48,7 +48,7 @@ macro_rules! impl_system_param_tuple {
         #[allow(clippy::undocumented_unsafe_blocks)] // false positive by clippy
         #[allow(non_snake_case)]
         $(#[$meta])*
-        unsafe impl<$($param: SystemParam),*> SystemParam for ($($param,)*) {
+        impl<$($param: SystemParam),*> SystemParam for ($($param,)*) {
             type State = ($($param::State,)*);
             type Item<'w, 's> = ($($param::Item::<'w, 's>,)*);
 
@@ -75,7 +75,6 @@ macro_rules! impl_system_param_tuple {
         }
     };
 }
-// bevy_utils::all_tuples!( impl_system_param_tuple, 0, 16, P);
 impl_system_param_tuple!();
 impl_system_param_tuple!(P0);
 impl_system_param_tuple!(P0, P1);

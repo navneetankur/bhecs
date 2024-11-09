@@ -96,4 +96,3 @@ impl_system_function!(P0, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12);
 impl_system_function!(P0, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13);
 impl_system_function!(P0, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14);
 impl_system_function!(P0, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15);
-// bevy_utils::all_tuples!(impl_system_function, 0, 16, F);

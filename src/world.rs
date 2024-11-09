@@ -1,12 +1,15 @@
 use derive_more::derive::{Deref, DerefMut};
+use hecs::Entity;
 
-use crate::ChangeTick;
+use crate::{resource::ResourceComponent, ChangeTick, PlayerComponent};
 
 #[derive(Deref, DerefMut)]
 pub struct World {
     #[deref] #[deref_mut]
     pub(crate) hworld: hecs::World,
     change_tick: ChangeTick,
+    resource_entity: Entity,
+    player_entity: Entity,
 }
 impl Default for World {
     fn default() -> Self {
@@ -21,9 +24,14 @@ impl World {
     }
     #[must_use]
     pub fn new() -> Self {
-        Self {
-            hworld: hecs::World::new(),
+        let mut hworld = hecs::World::new();
+        let resource_entity = hworld.spawn((ResourceComponent,));
+        let player_entity = hworld.spawn((PlayerComponent,));
+        return Self {
+            hworld, resource_entity, player_entity,
             change_tick: 1,
-        }
+        };
     }
+    pub fn resource_entity(&self) -> Entity { self.resource_entity }
+    pub fn player_entity(&self) -> Entity { self.player_entity }
 }

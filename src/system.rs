@@ -1,7 +1,9 @@
 pub mod systemparam;
+pub mod exclusivesystemparam;
 pub mod systemmeta;
 pub mod systeminput;
 pub mod functionsystem;
+pub mod exclusivefunctionsystem;
 
 use systeminput::{SystemIn, SystemInput};
 use crate::World;
@@ -16,8 +18,17 @@ pub trait System: Send + Sync + 'static {
     /// Returns true if system as deferred buffers
     fn has_deferred(&self) -> bool;
 
-    fn run(&mut self, input: SystemIn<'_, Self>, world: &mut World)
+    fn run_unchecked(&mut self, input: SystemIn<'_, Self>, world: &mut World)
         -> Self::Out;
+
+    fn run(&mut self, input: SystemIn<'_, Self>, world: &mut World)
+        -> Self::Out {
+        if !self.is_initialized(world) { self.initialize(world); }
+        let rv = self.run_unchecked(input, world);
+        self.apply_deferred(world);
+        return rv;
+    }
+
 
     /// Applies any [`Deferred`](crate::system::Deferred) system parameters (or other system buffers) of this system to the world.
     ///
@@ -26,6 +37,9 @@ pub trait System: Send + Sync + 'static {
 
     /// Initialize the system.
     fn initialize(&mut self, _world: &mut World);
+
+    /// Initialize the system.
+    fn is_initialized(&mut self, _world: &mut World) -> bool;
 }
 pub trait IntoSystem<In: SystemInput, Out, Marker>: Sized {
     /// The type of [`System`] that this instance converts into.

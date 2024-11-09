@@ -39,7 +39,7 @@ where
     }
 
     #[inline]
-    fn run(
+    fn run_unchecked(
         &mut self,
         input: SystemIn<'_, Self>,
         world: &mut World,
@@ -51,7 +51,7 @@ where
         //   if the world does not match.
         // - All world accesses used by `F::Param` have been registered, so the caller
         //   will ensure that there are no data access conflicts.
-        let params = unsafe {
+        let params = {
             F::Param::get_param(
                 self.param_state.as_mut().expect(PARAM_MESSAGE),
                 &self.system_meta,
@@ -74,6 +74,10 @@ where
     fn initialize(&mut self, world: &mut World) {
         self.param_state = Some(F::Param::init_state(world, &mut self.system_meta));
         self.system_meta.last_run = 0;
+    }
+
+    fn is_initialized(&mut self, _world: &mut World) -> bool {
+        self.param_state.is_some()
     }
 }
 
