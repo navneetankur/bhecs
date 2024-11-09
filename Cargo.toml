@@ -1,0 +1,51 @@
+[package]
+name = "bhecs"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+hecs = "0.10"
+derive_more = {version = "1.0", features = ["deref", "deref_mut", "constructor"]}
+bevy_utils = "0.14"
+
+[lints.rust]
+unused_imports = "allow"
+dead_code = "allow"
+
+[lints.clippy]
+pedantic = { level = "warn", priority = -1 }
+correctness = { level = "warn", priority = -1 }
+# restriction = { level = "warn", priority = -1 }
+
+doc_lazy_continuation = "allow"
+many_single_char_names = "allow"
+trivially_copy_pass_by_ref = "allow"
+cast_lossless = "allow"
+from_iter_instead_of_collect = "allow"
+# cast_precision_loss = "allow"
+# cast_lossless = "allow"
+# cast_possible_truncation = "allow"
+# cast_possible_wrap = "allow"
+# cast_sign_loss = "allow"
+# single_match = "allow"
+clone_on_copy = "allow"
+doc_markdown = "allow"
+module_name_repetitions = "allow"
+needless_return = "allow"
+no_effect_underscore_binding = "allow"
+redundant_else = "allow"
+semicolon_if_nothing_returned = "allow"
+similar_names = "allow"
+too_many_lines = "allow"
+unnecessary_cast = "allow"
+if_not_else = "allow"
+uninlined_format_args = "allow"
+default_trait_access = "allow"
+too_many_arguments = "allow"
+missing_errors_doc = "allow"
+needless_raw_string_hashes = "allow"
+enum_glob_use = "allow"
+range_minus_one = "allow"
+range_plus_one = "allow"
+missing_panics_doc = "allow"
+use_self = "allow"
