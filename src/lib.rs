@@ -7,7 +7,6 @@ pub use hecs::PreparedView as View;
 pub use hecs::PreparedQueryIter as Query;
 use derive_more::derive::{Deref, DerefMut};
 type ChangeTick = u32;
-pub struct PlayerComponent;
 
 
 #[cfg(test)]
