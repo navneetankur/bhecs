@@ -2,8 +2,10 @@ pub mod event;
 pub mod system;
 pub mod world;
 pub mod resource;
-use derive_more::derive::{Deref, DerefMut};
 pub use world::World;
+pub use hecs::PreparedView as View;
+pub use hecs::PreparedQueryIter as Query;
+use derive_more::derive::{Deref, DerefMut};
 type ChangeTick = u32;
 pub struct PlayerComponent;
 
