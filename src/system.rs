@@ -1,3 +1,4 @@
+pub mod query;
 pub mod systemparam;
 pub mod exclusivesystemparam;
 pub mod systemmeta;

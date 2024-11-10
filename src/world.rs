@@ -1,7 +1,7 @@
 use derive_more::derive::{Deref, DerefMut};
 use hecs::Entity;
 
-use crate::{resource::ResourceComponent, ChangeTick, PlayerComponent};
+use crate::{resource::{Resource, ResourceComponent}, ChangeTick, PlayerComponent};
 
 #[derive(Deref, DerefMut)]
 pub struct World {
@@ -34,4 +34,11 @@ impl World {
     }
     pub fn resource_entity(&self) -> Entity { self.resource_entity }
     pub fn player_entity(&self) -> Entity { self.player_entity }
+
+    pub fn insert_resource<R: Resource>(&mut self, resource: R) {
+        self.hworld.insert_one(self.resource_entity, resource).unwrap();
+    }
+    pub fn get_resource<R: Resource>(&mut self) -> hecs::Ref<'_, R> {
+        self.hworld.get::<&R>(self.resource_entity).unwrap()
+    }
 }

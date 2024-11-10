@@ -1,6 +1,5 @@
 use crate::{ChangeTick, World};
 use super::systemmeta::SystemMeta;
-pub mod impls;
 
 pub trait SystemParam: Sized {
     /// Used to store data which persists across invocations of a system.
@@ -22,7 +21,7 @@ pub trait SystemParam: Sized {
     /// [`Commands`]: crate::prelude::Commands
     #[inline]
     #[allow(unused_variables)]
-    fn apply(state: &mut Self::State, system_meta: &SystemMeta, world: &mut World) {}
+    fn apply(state: &mut Self::State, system_meta: &SystemMeta, world: &mut World);
 
     /// Creates a parameter to be passed into a [`SystemParamFunction`].
     ///

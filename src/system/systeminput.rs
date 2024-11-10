@@ -21,3 +21,10 @@ impl SystemInput for () {
 
     fn wrap(_this: Self::Inner<'_>) -> Self::Param<'_> {}
 }
+pub struct In<T>(pub T);
+impl<T> SystemInput for In<T> {
+    type Param<'i> = In<T>;
+    type Inner<'i> = T;
+
+    fn wrap(this: Self::Inner<'_>) -> Self::Param<'_> { In(this) }
+}
